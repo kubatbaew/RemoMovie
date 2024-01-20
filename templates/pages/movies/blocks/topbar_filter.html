@@ -1,0 +1,17 @@
+<div class="topbar-filter">
+    <div class="pagination2">
+        <span>Page {{ movie_list.number }} of {{ movie_list.paginator.num_pages }}:</span>
+
+        {% for i in movie_list.paginator.page_range %}
+            {% if movie_list.number == i %}
+                <a class="active" href="#">{{ i }}</a>
+            {% else %}
+                <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <a href="{% if movie_list.has_next %}?page={{ movie_list.next_page_number }}{% endif %}">
+            <i class="ion-arrow-right-b"></i>
+        </a>
+    </div>
+</div>

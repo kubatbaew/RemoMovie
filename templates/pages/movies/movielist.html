@@ -1,0 +1,165 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Фильмы{% endblock %}
+
+{% block content %}
+
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="../../../images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="#">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
+           
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="#">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
+           
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+{# Header #}
+{% include 'base/header.html' %}
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> Список фильмов - смотреть</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="{% url 'homepage' %}">Главная</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> Фильмы</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single movie_list">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="topbar-filter">
+					<p>Всего найдено  <span>{{ count_movie }} фильмов</span></p>
+
+					<a href="{% url 'movies_list' %}" class="list" style="padding-left: 295px"><i class="ion-ios-list-outline active"></i></a>
+					<a  href="{% url 'movies_grid' %}" class="grid"><i class="ion-grid"></i></a>
+				</div>
+
+                {% for movie in movie_list %}
+				<div class="movie-item-style-2">
+					<img src="{{ movie.image.url }}" alt="" style="width: 190px; height: 250px">
+					<div class="mv-item-infor">
+						<h6><a href="{% url 'movie_detail' movie.id %}">{{ movie.title }} <span>({{ movie.release_date.year }})</span></a></h6>
+						<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+						<p class="describe">{{ movie.description|truncatewords:20 }}</p>
+						<p class="run-time"> Run Time: {{ movie.run_time }}m’    .     <span>MMPA: {{ movie.mpaa_rating }} </span>    .     <span>Release: {{ movie.release_date }}</span></p>
+						<p>Director: <a href="#">{{ movie.director.first }}</a></p>
+						<p>Stars:
+
+                            {% for star in movie.celebrity.all %}
+                            <a href="#">{{ star.full_name }},</a>
+                            {% endfor %}
+
+                        </p>
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="sidebar">
+
+                    {# Search Movie #}
+                    {% include 'pages/movies/blocks/search_form.html' %}
+
+					<div class="sb-facebook sb-it">
+						<h4 class="sb-title">Мы в фейсбуке</h4>
+                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fitacademyosh%2F&tabs=timeline&width=300&height=315&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="300" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{# Footer #}
+{% include 'base/footer.html' %}
+
+{% endblock content %}

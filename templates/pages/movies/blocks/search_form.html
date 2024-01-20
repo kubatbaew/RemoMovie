@@ -1,0 +1,41 @@
+<div class="searh-form">
+    <h4 class="sb-title">Поиск фильма</h4>
+    <form class="form-style-1" action="">
+        <div class="row">
+            <div class="col-md-12 form-it">
+                <label>Название фильма</label>
+                <input type="text" placeholder="Введите ключевые слова" name="title">
+            </div>
+            <div class="col-md-12 form-it">
+                <label>Жанры</label>
+                <div class="group-ip">
+                    <select
+                        name="genres" multiple="" class="ui fluid dropdown">
+                        <option value="">Введите, чтобы отфильтровать жанры</option>
+
+                        {% for genre in genres %}
+                        <option value="{{ genre.title }}">{{ genre.title }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-md-12 form-it">
+                <label>Диапазон рейтинга</label>
+                 <select name="mppa_rating">
+                    <option value="">Выберите рейтинг</option>
+
+                     {% for rating in rating_all %}
+                    <option value="{{ rating.0 }}">{{ rating.1 }}</option>
+                     {% endfor %}
+
+                </select>
+
+            </div>
+            <div class="col-md-12 ">
+                <input class="submit" type="submit" value="submit">
+            </div>
+        </div>
+    </form>
+</div>

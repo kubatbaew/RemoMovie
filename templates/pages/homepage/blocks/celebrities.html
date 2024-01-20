@@ -1,0 +1,15 @@
+<div class="celebrities">
+    <h4 class="sb-title">Знаменитости </h4>
+    
+    {% for celebrity in celebrities %}
+    <div class="celeb-item">
+        <a href="#"><img src="{{ celebrity.image.url }}" alt="" width="70" height="70"></a>
+        <div class="celeb-author">
+            <h6><a href="#">{{ celebrity.full_name }}</a></h6>
+            <span>{{ celebrity.prof }}</span>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
+</div>
