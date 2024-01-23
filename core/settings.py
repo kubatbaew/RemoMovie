@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'apps.celebrities',
     'apps.media_people',
     'apps.reviews',
+    'apps.trailers',
+    'apps.news',
 ]
 
 MIDDLEWARE = [
