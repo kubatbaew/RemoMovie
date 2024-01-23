@@ -3,13 +3,13 @@
     
     {% for celebrity in celebrities %}
     <div class="celeb-item">
-        <a href="#"><img src="{{ celebrity.image.url }}" alt="" width="70" height="70"></a>
+        <a href="{% url 'celebrity_detail' celebrity.id %}"><img src="{{ celebrity.image.url }}" alt="" width="70" height="70"></a>
         <div class="celeb-author">
-            <h6><a href="#">{{ celebrity.full_name }}</a></h6>
+            <h6><a href="{% url 'celebrity_detail' celebrity.id %}">{{ celebrity.full_name }}</a></h6>
             <span>{{ celebrity.prof }}</span>
         </div>
     </div>
     {% endfor %}
     
-    <a href="#" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
+    <a href="{% url 'celebrities' %}" class="btn">Смотреть все<i class="ion-ios-arrow-right"></i></a>
 </div>

@@ -79,9 +79,8 @@ class Director(models.Model):
         max_length=50,
         verbose_name="Страна",
     )
-    movies = models.ForeignKey(
+    movies = models.ManyToManyField(
         Movie,
-        on_delete=models.CASCADE,
         verbose_name="Фильмы которые снимал",
         related_name="director",
     )

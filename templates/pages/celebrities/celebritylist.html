@@ -1,0 +1,181 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Актёры{% endblock %}
+
+{% block content %}
+
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="../../../images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="#">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
+           
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="#">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
+           
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+{# Header #}
+{% include 'base/header.html' %}
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>Список актёров - читать</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="{% url 'homepage' %}">Главная</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> Список актёров</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- celebrity list section-->
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="topbar-filter">
+					<p class="pad-change">Всего найдено  <span>{{ celebrity_list.count }} актёра</p>
+				</div>
+				<div class="row">
+
+                    {% for celebrity in celebrity_list %}
+					<div class="col-md-12">
+						<div class="ceb-item-style-2">
+							<img src="{{ celebrity.image.url }}" alt="" style="width: 190px; height: 250px">
+							<div class="ceb-infor">
+								<h2><a href="{% url 'celebrity_detail' celebrity.id %}">{{ celebrity.full_name }}</a></h2>
+								<span>{{ celebrity.prof }}</span>
+								<p>
+                                    {{ celebrity.bio|truncatewords:20 }}
+                                </p>
+							</div>
+						</div>
+					</div>
+				    {% endfor %}
+
+                </div>
+			</div>
+			<div class="col-md-3 col-xs-12 col-sm-12">
+				<div class="sidebar">
+						<div class="searh-form">
+						<h4 class="sb-title">Поиск актёра</h4>
+						<form class="form-style-1 celebrity-form" action="#">
+							<div class="row">
+								<div class="col-md-12 form-it">
+									<label>Имя Актёра</label>
+									<input type="text" name="full_name" placeholder="Enter keywords">
+								</div>
+								<div class="col-md-12 ">
+									<input class="submit" type="submit" value="submit">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="celebrities">
+						<h4 class="sb-title">Популярные режиссёры</h4>
+
+                        {% for director in directors %}
+                        <div class="celeb-item">
+							<a href="#"><img src="{{ director.image.url }}" alt="" style="width: 70px"></a>
+							<div class="celeb-author">
+								<h6><a href="{% url 'director_detail' director.id %}">{{ director.full_name }}</a></h6>
+								<span>режиссёр</span>
+							</div>
+						</div>
+                        {% endfor %}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of celebrity list section-->
+
+{# Footer #}
+{% include 'base/footer.html' %}
+
+{% endblock content %}

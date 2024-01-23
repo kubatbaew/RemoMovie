@@ -88,3 +88,22 @@ class MovieDetailView(generic.DetailView):
     model = Movie
     template_name = "pages/movies/moviesingle.html"
     pk_url_kwarg = 'pk'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        movie = self.get_object()
+
+        context['related_movies'] = Movie.objects.all().filter(genres__in=movie.genres.all()).exclude(id=movie.id).distinct()
+
+        appraisal = []
+
+        for review in movie.reviews.all():
+            for i in range(review.appraisal):
+                appraisal.append(1)
+
+        appraisal_default = [i for i in range(10 - len(appraisal))]
+
+        context['appraisal'] = appraisal
+        context['appraisal_default'] = appraisal_default
+
+        return context

@@ -1,0 +1,266 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ celebrity.full_name }}{% endblock %}
+
+{% block content %}
+
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="../../../images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="#">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
+           
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="#">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
+           
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+{# Header #}
+{% include 'base/header.html' %}
+
+<div class="hero hero3">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- <h1> movie listing - list</h1>
+				<ul class="breadcumb">
+					<li class="active"><a href="#">Home</a></li>
+					<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+				</ul> -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- celebrity single section-->
+
+<div class="page-single movie-single cebleb-single">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<div class="mv-ceb">
+					<img src="{{ celebrity.image.url }}" alt="">
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-12 col-xs-12">
+				<div class="movie-single-ct">
+					<h1 class="bd-hd">{{ celebrity.full_name }}</h1>
+					<p class="ceb-single">{{ celebrity.prof }}</p>
+					<div class="social-link cebsingle-socail">
+						<a href="{{ celebrity.facebook }}"><i class="ion-social-facebook"></i></a>
+						<a href="{{ celebrity.twitter }}"><i class="ion-social-twitter"></i></a>
+						<a href="{{ celebrity.gmail }}"><i class="ion-social-googleplus"></i></a>
+						<a href="{{ celebrity.linkedin }}"><i class="ion-social-linkedin"></i></a>
+					</div>
+					<div class="movie-tabs">
+						<div class="tabs">
+							<ul class="tab-links tabs-mv">
+								<li class="active"><a href="#overviewceb">Обзор</a></li>
+								<li><a href="#biography" id="bio"> Биография</a></li>
+								<li><a href="#mediaceb"> Медиа</a></li> 
+								<li><a href="#filmography">Фильмография</a></li>
+							</ul>
+						    <div class="tab-content">
+						        <div id="overviewceb" class="tab active">
+						            <div class="row">
+						            	<div class="col-md-8 col-sm-12 col-xs-12">
+						            		<p>
+                                                {{ celebrity.bio|truncatewords:60 }}
+                                            </p>
+											<p class="time"><a href="#bio">See full bio <i class="ion-ios-arrow-right"></i></a></p>
+											<div class="title-hd-sm">
+												<h4>Фильмы которые снимал</h4>
+												<a href="#" class="time">Full Filmography<i class="ion-ios-arrow-right"></i></a>
+											</div>
+											<!-- movie cast -->
+											<div class="mvcast-item">
+
+                                                {% for movie in celebrity.movies.all %}
+												<div class="cast-it">
+													<div class="cast-left cebleb-film">
+														<img src="{{ movie.image.url }}" alt="" style="width: 100px; height: 150px">
+														<div>
+															<a href="{% url 'movie_detail' movie.id %}">{{ movie.title }} </a>
+															<p class="time">{{ movie.director.first }}</p>
+														</div>
+														
+													</div>
+													<p>...  {{ movie.release_date.year }}</p>
+												</div>
+											    {% endfor %}
+
+                                            </div>
+						            	</div>
+						            	<div class="col-md-4 col-xs-12 col-sm-12">
+						            		<div class="sb-it">
+						            			<h6>Полное имя:  </h6>
+						            			<p><a href="#">{{ celebrity.full_name }}</a></p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Дата рождения: </h6>
+						            			<p>{{ celebrity.date_of_birth }}</p>
+						            		</div>
+						            		<div class="sb-it">
+						            			<h6>Страна:  </h6>
+						            			<p>{{ celebrity.country }}</p>
+						            		</div>
+						            	</div>
+						            </div>
+						        </div>
+						        <div id="biography" class="tab">
+						           <div class="row">
+						            	<div class="rv-hd">
+											<div>
+												<h3>Биография </h3>
+						       	 				<h2>{{ celebrity.full_name }}</h2>
+											</div>							            						
+						            	</div>
+						            	<p>
+                                            {{ celebrity.bio }}
+                                        </p>
+						            </div>
+						        </div>
+						        <div id="mediaceb" class="tab">
+						        	<div class="row">
+						        		<div class="rv-hd">
+						            		<div>
+						            			<h3>Медиа</h3>
+					       	 					<h2>{{ celebrity.full_name }}</h2>
+						            		</div>
+						            	</div>
+										<div class="title-hd-sm">
+											<h4>Фотография<span>({{ celebrity.director_image_media.count }})</span></h4>
+										</div>
+										<div class="mvsingle-item">
+
+										    {% for media in celebrity.director_image_media.all %}
+											<a class="img-lightbox"  data-fancybox-group="gallery" href="{{ media.image.url }}" ><img src="{{ media.image.url }}" alt="" style="width: 100px; height: 100px"></a>
+										    {% endfor %}
+
+                                        </div>
+						        	</div>
+					       	 	</div>
+					       	 	<div id="filmography" class="tab">
+						        	<div class="row">
+						            	<div class="rv-hd">
+						            		<div>
+						            			<h3>Все фильмы</h3>
+					       	 					<h2>{{ celebrity.full_name }}</h2>
+						            		</div>
+										
+						            	</div>
+						            	<div class="topbar-filter">
+											<p>Всего найдено <span>{{ celebrity.movies.count }} фильма</span></p>
+										</div>
+										<!-- movie cast -->
+										<div class="mvcast-item">
+
+                                            {% for movie in celebrity.movies.all %}
+											<div class="cast-it">
+												<div class="cast-left cebleb-film">
+													<img src="{{ movie.image.url }}" alt="" style="width: 110px">
+													<div>
+														<a href="{% url 'movie_detail' movie.id %}">{{ movie.title }} </a>
+														<p class="time">{{ movie.celebrity.first }}</p>
+													</div>
+													
+												</div>
+												<p>...  2016</p>
+											</div>
+                                            {% endfor %}
+
+                                        </div>
+						            </div>
+					       	 	</div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+<!-- celebrity single section-->
+
+{# Footer #}
+{% include 'base/footer.html' %}
+
+{% endblock content %}
