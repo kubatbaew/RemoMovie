@@ -38,16 +38,6 @@
 						</li>
 						<li class="dropdown first">
 							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							news <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="bloglist.html">blog List</a></li>
-								<li><a href="bloggrid.html">blog Grid</a></li>
-								<li class="it-last"><a href="blogdetail.html">blog Detail</a></li>
-							</ul>
-						</li>
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
 							community <i class="fa fa-angle-down" aria-hidden="true"></i>
 							</a>
 							<ul class="dropdown-menu level1">
@@ -59,19 +49,18 @@
 						</li>
 					</ul>
 					<ul class="nav navbar-nav flex-child-menu menu-right">
-						<li class="dropdown first">
-							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-							pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-							</a>
-							<ul class="dropdown-menu level1">
-								<li><a href="landing.html">Landing</a></li>
-								<li><a href="404.html">404 Page</a></li>
-								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-							</ul>
-						</li>
-						<li><a href="#">Help</a></li>
-						<li class="loginLink"><a href="#">LOG In</a></li>
-						<li class="btn signupLink"><a href="#">sign up</a></li>
+{#						<li class="dropdown first">#}
+{#							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">#}
+{#							pages <i class="fa fa-angle-down" aria-hidden="true"></i>#}
+{#							</a>#}
+{#							<ul class="dropdown-menu level1">#}
+{#								<li><a href="landing.html">Landing</a></li>#}
+{#								<li><a href="404.html">404 Page</a></li>#}
+{#								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>#}
+{#							</ul>#}
+{#						</li>#}
+						<li class=""><a href="{% url 'login' %}">Вход</a></li>
+						<li class="btn signupLink"><a href="#">Регистрация</a></li>
 					</ul>
 				</div>
 			<!-- /.navbar-collapse -->

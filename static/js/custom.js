@@ -448,6 +448,7 @@ $(function(){
 	var signupct= $("#signup-content");
 	var loginWrap = $(".login-wrapper");
 	var overlay = $(".overlay");
+
 	loginWrap.each( function(){
 		$(this).wrap('<div class="overlay"></div>')
 	});
@@ -483,6 +484,7 @@ $(function(){
 			}	
 		});
     });
+
     // close popup for mobile
     var closebt = $(".close");
    	closebt.on('click', function(e){

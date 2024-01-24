@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views import generic
 
-# Create your views here.
+from apps.news.models import News
+
+
+class NewsDetailView(generic.DetailView):
+    model = News
+    pk_url_kwarg = 'pk'
+    template_name = 'pages/news/blogsingle.html'

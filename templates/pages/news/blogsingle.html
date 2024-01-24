@@ -1,0 +1,172 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+
+{% block content %}
+	
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="../../../images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+<!--login form popup-->
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <form method="post" action="login.php">
+        	<div class="row">
+        		 <label for="username">
+                    Username:
+                    <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+        	</div>
+           
+            <div class="row">
+            	<label for="password">
+                    Password:
+                    <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+            <div class="row">
+            	<div class="remember">
+					<div>
+						<input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+					</div>
+            		<a href="#">Forget password ?</a>
+            	</div>
+            </div>
+           <div class="row">
+           	 <button type="submit">Login</button>
+           </div>
+        </form>
+        <div class="row">
+        	<p>Or via social</p>
+            <div class="social-btn-2">
+            	<a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+            	<a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper"  id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>sign up</h3>
+        <form method="post" action="signup.php">
+            <div class="row">
+                 <label for="username-2">
+                    Username:
+                    <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                </label>
+            </div>
+           
+            <div class="row">
+                <label for="email-2">
+                    your email:
+                    <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="password-2">
+                    Password:
+                    <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+             <div class="row">
+                <label for="repassword-2">
+                    re-type Password:
+                    <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                </label>
+            </div>
+           <div class="row">
+             <button type="submit">sign up</button>
+           </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+{% include 'base/header.html' %}
+
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> {{ news.title }}</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="{% url 'homepage' %}">Главная</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> новости</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- blog detail section-->
+<div class="page-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="blog-detail-ct">
+					<h1>{{ news.title }}</h1>
+					<span class="time">{{ news.created_at }}</span>
+					<img src="{{ news.poster.url }}" alt="">
+					<p>
+                        {{ news.description }}
+                    </p>
+					<div class="flex-it flex-ct">
+						<p>
+							{{ news.male_description }}
+                        </p>
+						<img src="{{ news.image.url }}" alt="">
+					</div>
+					<!-- comment items -->
+					<div class="comments">
+						<h4>{{ news.news_comments.count }} комментарий</h4>
+                        
+                        {% for comment in news.news_comments.all %}
+						<div class="cmt-item flex-it">
+							<img src="../../../images/uploads/author.png" alt="">
+							<div class="author-infor" style="width: 100%; margin: auto">
+								<div class="flex-it2">
+									<h6><a href="#">{{ comment.user.username }}</a></h6> <span class="time"> - {{ comment.created_at }}</span>
+								</div>
+								<p>
+                                    {{ comment.text }}
+                                </p>
+							</div>
+						</div>
+					    {% endfor %}
+                    
+                    </div>
+					<div class="comment-form">
+						<h4>Добавить комментарий</h4>
+						<form action="{% url 'create_comment' news.id %}" method="post">
+                            {% csrf_token %}
+							<div class="row">
+								<div class="col-md-12">
+									<textarea name="text" for="text" placeholder="Message"></textarea>
+								</div>
+							</div>
+							<input class="submit" type="submit" placeholder="submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of  blog detail section-->
+    
+{% include 'base/footer.html' %}    
+    
+{% endblock %}

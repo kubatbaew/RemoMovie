@@ -12,6 +12,9 @@
         <span></span>
     </div>
 </div>
+    
+{% include 'pages/movies/blocks/review.html' %}    
+    
 <!--end of preloading-->
 <!--login form popup-->
 <div class="login-wrapper" id="login-content">
@@ -253,8 +256,22 @@
 							            		<h3>Отзывы на фильм</h3>
 						       	 				<h2>{{ movie.title }}</h2>
 							            	</div>
-							            	<a href="#" class="redbtn">Написать</a>
 						            	</div>
+                                        <div class="blog-detail-ct">
+                                            <div class="comment-form">
+                                                <h4>Добавить отзыв</h4>
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <textarea name="text" for="text" placeholder="Message" style="width: 50%; height: 50%"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <input class="submit" type="submit" placeholder="submit">
+                                                </form>
+                                            </div>
+                                        </div>
+                                   
 						            	<div class="topbar-filter">
 											<p>Найдено <span>{{ movie.reviews.count }} отзыва</span></p>
 										</div>
