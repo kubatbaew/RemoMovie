@@ -24,7 +24,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="hero-ct">
-					<h1 style="margin-right: 60px">{{ user.first_name }} {{ user.last_name }}'s profile</h1>
+					<h1 style="margin-right: 0">{{ user.first_name }} {{ user.last_name }}'s profile</h1>
 					<ul class="breadcumb">
 						<li class="active"><a href="{% url 'homepage' %}">Главная</a></li>
 						<li> <span class="ion-ios-arrow-right"></span>Профиль</li>
@@ -40,99 +40,94 @@
 			<div class="col-md-3 col-sm-12 col-xs-12">
 				<div class="user-information">
 					<div class="user-img">
-						<a href="#"><img style="border-radius: 100%; width: 200px; height: 200px" src="{{ user.avatar.url }}" alt=""><br></a>
+						<a href="#"><img style="border-radius: 100%; width: 200px; height: 200px" src="
+                            {% if user.avatar %}
+                                {{ user.avatar.url }}
+                            {% else %}
+                            {% endif %}
+                        " alt=""><br></a>
                         <form action="{% url 'change_avatar' user.id %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="file" name="avatar">
-                            <button class="redbtn" type="submit">Change avatar</button>
+                            <button class="redbtn" type="submit">Изменить аватар</button>
                         </form>
 					</div>
 					<div class="user-fav">
-						<p>Account Details</p>
+						<p>Детали аккаунта</p>
 						<ul>
-							<li  class="active"><a href="userprofile.html">Profile</a></li>
-							<li><a href="userfavoritelist.html">Favorite movies</a></li>
-							<li><a href="userrate.html">Rated movies</a></li>
+							<li  class="active"><a href="{% url 'profile' %}">Профиль</a></li>
+							<li><a href="{% url 'favorite_movie' %}">Любимые фильмы</a></li>
 						</ul>
 					</div>
 					<div class="user-fav">
-						<p>Others</p>
+						<p>Другие</p>
 						<ul>
-							<li><a href="#">Change password</a></li>
-							<li><a href="#">Log out</a></li>
+							<li><a href="{% url 'logout' %}">Выйти</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="form-style-1 user-pro" action="">
-					<form action="" class="user">
-						<h4>01. Profile details</h4>
+					<form action="{% url 'change_profile' user.id %}" class="user" method="post">
+                        {% csrf_token %}
+						<h4>Детали профиля</h4>
 						<div class="row">
 							<div class="col-md-6 form-it">
-								<label>Username</label>
-								<input type="text" placeholder="edwardkennedy">
+								<label>Имя пользователя</label>
+								<input type="text" placeholder="{{ user.username }}" name="username" value="{{ user.username }}">
 							</div>
 							<div class="col-md-6 form-it">
-								<label>Email Address</label>
-								<input type="text" placeholder="edward@kennedy.com">
+								<label>Почта</label>
+								<input type="text" placeholder="{{ user.email }}" name="email" value="{{ user.email }}">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
-								<label>First Name</label>
-								<input type="text" placeholder="Edward ">
+								<label>Имя</label>
+								<input type="text" placeholder="{{ user.first_name }}" name="first_name" value="{{ user.first_name }}">
 							</div>
 							<div class="col-md-6 form-it">
-								<label>Last Name</label>
-								<input type="text" placeholder="Kennedy">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6 form-it">
-								<label>Country</label>
-								<select>
-								  <option value="united">United States</option>
-								  <option value="saab">Others</option>
-								</select>
-							</div>
-							<div class="col-md-6 form-it">
-								<label>State</label>
-								<select>
-								  <option value="united">New York</option>
-								  <option value="saab">Others</option>
-								</select>
+								<label>Фамилия</label>
+								<input type="text" placeholder="{{ user.last_name }}" name="last_name" value="{{ user.last_name }}">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-2">
-								<input class="submit" type="submit" value="save">
+								<input class="submit" type="submit" value="Сохранить">
 							</div>
 						</div>	
 					</form>
-					<form action="" class="password">
-						<h4>02. Change password</h4>
+					<form action="{% url 'change_password' user.id %}" class="password" method="post">
+                        {% csrf_token %}
+						<h4>Изменить пароль</h4>
+                        
+                        {% if error %}
+                            <p style="color: red">* {{ error }}</p>
+                        {% else %}   
+                        {% endif %}
+                        
 						<div class="row">
 							<div class="col-md-6 form-it">
-								<label>Old Password</label>
-								<input type="text" placeholder="**********">
+								<label>Старый пароль</label>
+								<input type="text" placeholder="**********" name="old_password">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
-								<label>New Password</label>
-								<input type="text" placeholder="***************">
+								<label>Новый пароль</label>
+								<input type="text" placeholder="***************" name="password">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6 form-it">
-								<label>Confirm New Password</label>
-								<input type="text" placeholder="*************** ">
+								<label>Повторите новый пароль</label>
+								<input type="text" placeholder="***************" name="new_password">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-2">
-								<input class="submit" type="submit" value="change">
+								<input class="submit" type="submit" value="Изменить">
 							</div>
 						</div>	
 					</form>

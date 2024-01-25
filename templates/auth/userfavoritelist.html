@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+	{{ user.username }}
+{% endblock %}
+
+
+{% block content %}
+    
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="../../../images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+{% include 'base/header.html' %}
+
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1 style="margin-right: 0">{{ user.first_name }} {{ user.last_name }}'s profile</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="{% url 'homepage' %}">Главная</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>Профиль</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single userfav_list">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="user-information">
+					<div class="user-img">
+						<a href="#"><img style="border-radius: 100%; width: 200px; height: 200px" src="
+                            {% if user.avatar %}
+                                {{ user.avatar.url }}
+                            {% else %}
+                            {% endif %}
+                        " alt=""><br></a>
+                        <form action="{% url 'change_avatar' user.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" name="avatar">
+                            <button class="redbtn" type="submit">Изменить аватар</button>
+                        </form>
+					</div>
+					<div class="user-fav">
+						<p>Детали аккаунта</p>
+						<ul>
+							<li  class="active"><a href="{% url 'profile' %}">Профиль</a></li>
+							<li><a href="{% url 'favorite_movie' %}">Любимые фильмы</a></li>
+						</ul>
+					</div>
+					<div class="user-fav">
+						<p>Другие</p>
+						<ul>
+							<li><a href="{% url 'logout' %}">Выйти</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="topbar-filter user">
+					<p>Найдено <span>{{ user.favorite_movies.count }} фильмов</span></p>
+				</div>
+				<div class="flex-wrap-movielist user-fav-list">
+                    
+                    {% for movie in user.favorite_movies.all %}
+					<div class="movie-item-style-2">
+						<img src="{{ movie.image.url }}" alt="">
+						<div class="mv-item-infor">
+							<h6><a href="#">{{ movie.title }} <span>({{ movie.release_date.year }})</span></a></h6>
+							<p class="describe">
+                                {{ movie.description|truncatewords:15 }}
+                            </p>
+							<p class="run-time"> Run Time: {{ movie.run_time }}’    .     <span>MMPA: {{ movie.mpaa_rating }} </span>    .     <span>Release: {{ movie.release_date }}</span></p>
+							<p>Director: <a href="{% url 'director_detail' movie.director.first.id %}">{{ movie.director.first.full_name }}</a></p>
+							<p>Stars: 
+                                
+                                {% for celebr in movie.celebrity.all %}
+                                <a href="{% url 'celebrity_detail' celebr.id %}">{{ celebr.full_name }},</a> 
+                                {% endfor %}
+                                
+                            </p>
+						</div>
+					</div>
+                    {% endfor %}
+                    
+                    
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    
+{% include 'base/footer.html' %}
+{% endblock %}

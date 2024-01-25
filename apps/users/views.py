@@ -49,10 +49,9 @@ def signup_logics(request):
     return render(request, '')
 
 
-class UserDetailView(generic.DetailView):
-    model = User
-    template_name = 'auth/profile.html'
-    pk_url_kwarg = 'pk'
+def profile(request):
+    user = User.objects.get(id=request.user.id)
+    return render(request, 'auth/profile.html', locals())
 
 
 def change_avatar(request, pk):
@@ -64,3 +63,51 @@ def change_avatar(request, pk):
         user.save()
 
         return redirect('profile', user.id)
+
+
+def change_profile(request, pk):
+    if request.method == "POST":
+        user = User.objects.get(id=pk)
+
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        user.username = username
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
+
+        return redirect('profile')
+
+    return redirect('/')
+
+
+def change_password(request, pk):
+    if request.method == 'POST':
+        user = User.objects.get(id=pk)
+
+        old_password = request.POST.get('old_password')
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+
+        if password != new_password:
+            error = "Пароли не совпадают!"
+            return render(request, 'auth/profile.html', locals())
+
+        if not user.check_password(old_password):
+            error = "Старый пароль не правильно"
+            return render(request, 'auth/profile.html', locals())
+
+        user.set_password(new_password)
+        user.save()
+        return redirect('profile', )
+
+    return redirect('/')
+
+
+def favorite_movie(request):
+    user = request.user
+    return render(request, 'auth/userfavoritelist.html', locals())
