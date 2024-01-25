@@ -59,8 +59,12 @@
 {#								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>#}
 {#							</ul>#}
 {#						</li>#}
+                        {% if request.user.is_authentication %}
 						<li class=""><a href="{% url 'login' %}">Вход</a></li>
 						<li class="btn signupLink"><a href="#">Регистрация</a></li>
+                        {% else %}
+						<li class=""><a href="{% url 'profile' request.user.id %}">Профиль</a></li>
+                        {% endif %}
 					</ul>
 				</div>
 			<!-- /.navbar-collapse -->
