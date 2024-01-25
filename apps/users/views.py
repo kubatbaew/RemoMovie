@@ -34,10 +34,10 @@ def signup_logics(request):
         repassword = request.POST['repassword']
 
         if password != repassword:
-            return render(request, 'auth/sign_up.html', {'error': "Пароли не совпадают!"})
+            return render(request, 'auth/sign.html', {'error': "Пароли не совпадают!"})
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'auth/sign_up.html', {'error': "Такой пользователь уже есть!"})
+            return render(request, 'auth/sign.html', {'error': "Такой пользователь уже есть!"})
 
         user = User.objects.create_user(
             username=username,
@@ -46,7 +46,7 @@ def signup_logics(request):
         login(request, user)
         return redirect('homepage')
 
-    return render(request, '')
+    return render(request, 'auth/sign.html')
 
 
 def profile(request):
@@ -62,7 +62,6 @@ def change_avatar(request, pk):
         user.avatar = avatar
         user.save()
 
-        return redirect('profile', user.id)
 
 
 def change_profile(request, pk):
