@@ -63,7 +63,6 @@ def change_avatar(request, pk):
         user.save()
 
 
-
 def change_profile(request, pk):
     if request.method == "POST":
         user = User.objects.get(id=pk)

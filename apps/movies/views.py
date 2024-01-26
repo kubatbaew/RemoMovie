@@ -12,7 +12,6 @@ from apps.genres.models import Genre
 class MovieListView(generic.ListView):
     model = Movie
     template_name = 'pages/movies/movielist.html'
-    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -38,16 +37,6 @@ class MovieListView(generic.ListView):
         context['genres'] = Genre.objects.all()
         context['count_movie'] = self.get_queryset().count()
         context['rating_all'] = [rating for rating in Movie.MPAARating.choices]
-
-        paginator = Paginator(context['movie_list'], self.paginate_by)
-        page = self.request.GET.get('page')
-
-        try:
-            context['movie_list'] = paginator.page(page)
-        except PageNotAnInteger:
-            context['movie_list'] = paginator.page(1)
-        except EmptyPage:
-            context['movie_list'] = paginator.page(paginator.num_pages)
 
         return context
 

@@ -257,20 +257,6 @@
 						       	 				<h2>{{ movie.title }}</h2>
 							            	</div>
 						            	</div>
-                                        <div class="blog-detail-ct">
-                                            <div class="comment-form">
-                                                <h4>Добавить отзыв</h4>
-                                                <form action="" method="post">
-                                                    {% csrf_token %}
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <textarea name="text" for="text" placeholder="Message" style="width: 50%; height: 50%"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <input class="submit" type="submit" placeholder="submit">
-                                                </form>
-                                            </div>
-                                        </div>
                                    
 						            	<div class="topbar-filter">
 											<p>Найдено <span>{{ movie.reviews.count }} отзыва</span></p>
@@ -279,7 +265,7 @@
                                        {% for review in movie.reviews.all %}
                                        <div class="mv-user-review-item">
 											<div class="user-infor">
-												<img src="../../../images/uploads/userava1.jpg" alt="">
+												<img src="{{ review.user.avatar.url }}" alt="">
 												<div>
 													<h3>{{ review.object }}</h3>
 													<div class="no-star">
